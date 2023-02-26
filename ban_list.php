@@ -61,7 +61,7 @@ if(!$user_site) {
         //check if site nr is valid
         $ban_page_curr=($page==0 || $page>$ban_page_max) ? 1:$page;
         //calc mysql limits from current site
-        $min=($config->bans_per_page * $ban_page_curr)-$config->bans_per_page;
+        $min=((int)$config->bans_per_page * (int)$ban_page_curr)- (int)$config->bans_per_page;
         //build array with site info
         $ban_page=array(
                 "current"       => $ban_page_curr,            //current site
@@ -72,7 +72,8 @@ if(!$user_site) {
                 "all_ban"       => $ban_count[1]                     //count all bans
         );
         //get bans for current page
-        $query  = $mysql->query("SELECT ba.*, se.gametype,se.timezone_fixx, aa.nickname FROM `".$config->db_prefix."_bans` AS ba
+        $query  = $mysql->query("SELECT ba.*, se.gametype,se.timezone_fixx, aa.nickname 
+                                FROM `".$config->db_prefix."_bans` AS ba
                                 LEFT JOIN `".$config->db_prefix."_serverinfo` AS se ON ba.server_ip=se.address
                                 LEFT JOIN `".$config->db_prefix."_amxadmins` AS aa ON (aa.steamid=ba.admin_nick OR aa.steamid=ba.admin_ip OR aa.steamid=ba.admin_id)
                                 WHERE ba.expired=0 ORDER BY ban_created DESC LIMIT ".$min.",".$config->bans_per_page) or die($mysql->error);
