@@ -15,7 +15,7 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    You should have received a copy of the cc-nC-SA along with AMXBans.  
+    You should have received a copy of the cc-nC-SA along with AMXBans! 
 	If not, see <http://creativecommons.org/licenses/by-nc-sa/2.0/>.
 
 */
