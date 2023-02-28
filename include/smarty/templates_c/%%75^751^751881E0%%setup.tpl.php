@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2023-02-23 22:26:06
+<?php /* Smarty version 2.6.25, created on 2023-02-25 18:52:25
          compiled from setup.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'getlanguage', 'setup.tpl', 1, false),array('modifier', 'selectlang', 'setup.tpl', 2, false),array('modifier', 'lang', 'setup.tpl', 6, false),array('modifier', 'escape', 'setup.tpl', 27, false),)), $this); ?>

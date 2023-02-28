@@ -53,7 +53,11 @@ if(!$user_site) {
         $ban_count[1]=$query->fetch_row()[0];
         //calc max sites
         $ban_page_max=ceil($ban_count[0] / $config->bans_per_page);
-    if(isset($_REQUEST["site"])) $page=(int)$_REQUEST["site"];
+    if(isset($_REQUEST["site"])) {
+         $page=(int)$_REQUEST["site"];
+        } else {
+                $page = 0;
+        };
     if(isset($_REQUEST["siteback_x"])) $page=(int)$_REQUEST["site"];
     if(isset($_REQUEST["sitenext_x"])) $page=(int)$_REQUEST["site"];
     if(isset($_REQUEST["sitestart_x"])) $page=1;
@@ -72,11 +76,19 @@ if(!$user_site) {
                 "all_ban"       => $ban_count[1]                     //count all bans
         );
         //get bans for current page
-        $query  = $mysql->query("SELECT ba.*, se.gametype,se.timezone_fixx, aa.nickname 
-                                FROM `".$config->db_prefix."_bans` AS ba
-                                LEFT JOIN `".$config->db_prefix."_serverinfo` AS se ON ba.server_ip=se.address
-                                LEFT JOIN `".$config->db_prefix."_amxadmins` AS aa ON (aa.steamid=ba.admin_nick OR aa.steamid=ba.admin_ip OR aa.steamid=ba.admin_id)
-                                WHERE ba.expired=0 ORDER BY ban_created DESC LIMIT ".$min.",".$config->bans_per_page) or die($mysql->error);
+
+        try {
+                $query  = $mysql->query("SELECT ba.*, se.gametype,se.timezone_fixx, aa.nickname 
+                FROM `".$config->db_prefix."_bans` AS ba
+                LEFT JOIN `".$config->db_prefix."_serverinfo` AS se ON ba.server_ip=se.address
+                LEFT JOIN `".$config->db_prefix."_amxadmins` AS aa ON (aa.steamid=ba.admin_nick OR aa.steamid=ba.admin_ip OR aa.steamid=ba.admin_id)
+                WHERE ba.expired=0 ORDER BY ban_created DESC LIMIT ".$min.",".$config->bans_per_page);
+                //or die($mysql->error);   
+        } catch (mysqli_sql_exception $e) {
+                var_dump($e);
+                exit;
+        }
+       
 
         //build ban list array
         while($result = $query->fetch_object()) {

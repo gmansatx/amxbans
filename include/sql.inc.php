@@ -15,7 +15,7 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    You should have received a copy of the cc-nC-SA along with AMXBans.  
+    You should have received a copy of the cc-nC-SA along with AMXBans! 
 	If not, see <http://creativecommons.org/licenses/by-nc-sa/2.0/>.
 
 */
@@ -506,9 +506,9 @@ function sql_get_files($bid,&$count) {
 }
 function sql_get_search_amxadmins(&$amxadmins,&$nickadmins) {
 	global $config, $mysql;
-	$query = $mysql->query("SELECT `admin_id`,`admin_nick` FROM `".$config->db_prefix."_bans` GROUP BY `admin_id` ORDER BY `admin_nick`") or die ($mysql->error);	
+	$query = $mysql->query("SELECT `admin_id`,`admin_nick` FROM `".$config->db_prefix."_bans` ORDER BY `admin_nick`") or die ($mysql->error);	
 	while($result = $query->fetch_object()) {
-		$checkQry = $mysql->query("SELECT * FROM `".$config->db_prefix."_amxadmins` WHERE `steamid`='".$result->admin_id."' GROUP BY `steamid`") or die ($mysql->error);
+		$checkQry = $mysql->query("SELECT * FROM `".$config->db_prefix."_amxadmins` WHERE `steamid`='".$result->admin_id."' ORDER BY `steamid`") or die ($mysql->error);
 		if( $checkQry->num_rows > 0 ) {
 			//-- Is Found
 			if($result->admin_id <> "")	$amxadmins[]=array("steam"=>$result->admin_id,"nick"=>html_safe($result->admin_nick));
@@ -521,7 +521,7 @@ function sql_get_search_amxadmins(&$amxadmins,&$nickadmins) {
 function sql_get_search_servers() {
 	global $config, $mysql;
 	$servers = array();
-	$query = $mysql->query("SELECT `server_ip`,`server_name` FROM `".$config->db_prefix."_bans` GROUP BY `server_ip` ORDER BY `server_name`") or die ($mysql->error);
+	$query = $mysql->query("SELECT `server_ip`,`server_name` FROM `".$config->db_prefix."_bans` ORDER BY `server_ip`") or die ($mysql->error);
 	//Array aufbereiten
 	while($result = $query->fetch_object()) {
 		if($result->server_name=="website") {
