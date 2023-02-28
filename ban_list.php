@@ -65,7 +65,7 @@ if(!$user_site) {
         //check if site nr is valid
         $ban_page_curr=($page==0 || $page>$ban_page_max) ? 1:$page;
         //calc mysql limits from current site
-        $min=($config->bans_per_page * $ban_page_curr)-$config->bans_per_page;
+        $min=((int)$config->bans_per_page * (int)$ban_page_curr)- (int)$config->bans_per_page;
         //build array with site info
         $ban_page=array(
                 "current"       => $ban_page_curr,            //current site
@@ -76,6 +76,7 @@ if(!$user_site) {
                 "all_ban"       => $ban_count[1]                     //count all bans
         );
         //get bans for current page
+
         try {
                 $query  = $mysql->query("SELECT ba.*, se.gametype,se.timezone_fixx, aa.nickname 
                 FROM `".$config->db_prefix."_bans` AS ba
